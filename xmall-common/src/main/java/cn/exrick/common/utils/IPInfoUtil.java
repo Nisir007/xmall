@@ -22,7 +22,7 @@ public class IPInfoUtil {
     /**
      * Mob官网注册申请即可
      */
-    private final static String APPKEY = "你的APPKEY";
+    private final static String APPKEY = "2bc3685372a1f";
     /**
      * Mob全国天气预报接口
      */

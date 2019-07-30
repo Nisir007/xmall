@@ -72,7 +72,7 @@ public class MemberController {
     public Result<Member> login(@RequestBody MemberLoginRegist memberLoginRegist,
                                 HttpServletRequest request){
 
-        //极验验证
+        /*//极验验证
         GeetestLib gtSdk = new GeetestLib(GeetestLib.id, GeetestLib.key,GeetestLib.newfailback);
 
         String challenge=memberLoginRegist.getChallenge();
@@ -109,6 +109,8 @@ public class MemberController {
             member.setState(0);
             member.setMessage("验证失败");
         }
+        return new ResultUtil<Member>().setData(member);*/
+        Member member=loginService.userLogin(memberLoginRegist.getUserName(), memberLoginRegist.getUserPwd());
         return new ResultUtil<Member>().setData(member);
     }
 
@@ -133,7 +135,7 @@ public class MemberController {
     public Result<Object> register(@RequestBody MemberLoginRegist memberLoginRegist,
                                    HttpServletRequest request){
 
-        //极验验证
+        /*//极验验证
         GeetestLib gtSdk = new GeetestLib(GeetestLib.id, GeetestLib.key,GeetestLib.newfailback);
 
         String challenge=memberLoginRegist.getChallenge();
@@ -173,7 +175,15 @@ public class MemberController {
         else {
             // 验证失败
             return new ResultUtil<Object>().setErrorMsg("验证失败");
+        }*/
+        // 验证成功
+        int result=registerService.register(memberLoginRegist.getUserName(), memberLoginRegist.getUserPwd());
+        if(result==0){
+            return new ResultUtil<Object>().setErrorMsg("该用户名已被注册");
+        }else if(result==-1){
+            return new ResultUtil<Object>().setErrorMsg("用户名密码不能为空");
         }
+        return new ResultUtil<Object>().setData(result);
     }
 
     @RequestMapping(value = "/member/imgaeUpload",method = RequestMethod.POST)

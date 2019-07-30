@@ -67,7 +67,7 @@ public class UserController {
                                 String challenge,String validate,String seccode,
                                 HttpServletRequest request){
 
-        //极验验证
+       /* //极验验证
         GeetestLib gtSdk = new GeetestLib(GeetestLib.id, GeetestLib.key,GeetestLib.newfailback);
 
         //从session中获取gt-server状态
@@ -105,6 +105,17 @@ public class UserController {
         else {
             // 验证失败
             return new ResultUtil<Object>().setErrorMsg("验证失败");
+        }*/
+        // 验证成功
+        Subject subject = SecurityUtils.getSubject() ;
+        //MD5加密
+        String md5Pass = DigestUtils.md5DigestAsHex(password.getBytes());
+        UsernamePasswordToken token = new UsernamePasswordToken(username,md5Pass);
+        try {
+            subject.login(token);
+            return new ResultUtil<Object>().setData(null);
+        }catch (Exception e){
+            return new ResultUtil<Object>().setErrorMsg("用户名或密码错误");
         }
     }
 
